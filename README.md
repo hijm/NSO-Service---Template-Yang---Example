@@ -10,7 +10,7 @@ core-service
  - Physical Interface
    - Access-group
  - ACL - No Branch access -> Loopback
- - No hhtp service
+ - No http service
  
 branch-service
  - OSPF
@@ -18,4 +18,4 @@ branch-service
    - Cost
  - Int loopback 10
    - IP addressx
- - No hhtp service
+ - No http service
