@@ -1,0 +1,40 @@
+module branch-service {
+  namespace "http://com/example/branch-service";
+  prefix branch-service;
+
+  import ietf-inet-types {
+    prefix inet;
+  }
+  import tailf-ncs {
+    prefix ncs;
+  }
+
+  list branch-service {
+    key name;
+
+    uses ncs:service-data;
+    ncs:servicepoint "branch-service";
+
+    leaf name {
+      type string;
+    }
+    
+    list devices {
+      key device;
+      leaf device {
+        type leafref {
+          path "/ncs:devices/ncs:device/ncs:name";
+        }
+      }
+      leaf ip_add_lo10 {
+        type inet:ipv4-address;
+        mandatory true;
+      }
+
+
+    }
+    // may replace this with other ways of refering to the devices.
+
+    // replace with your own stuff here
+  }
+}

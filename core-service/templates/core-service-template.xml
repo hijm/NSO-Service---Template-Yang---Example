@@ -1,0 +1,143 @@
+<config-template xmlns="http://tail-f.com/ns/config/1.0"
+                 servicepoint="core-service">
+  <devices xmlns="http://tail-f.com/ns/ncs">
+    <device foreach="{/devices}">
+      <!--
+          Select the devices from some data structure in the service
+          model. In this skeleton the devices are specified in a leaf-list.
+          Select all devices in that leaf-list:
+      -->
+      <name>{device}</name>
+      <config>
+        <ip xmlns="urn:ios">
+          <http>
+            <server>false</server>
+            <secure-server>false</secure-server>
+          </http>
+          <access-list>
+            <extended>
+              <ext-named-acl>
+                <name>TELNET</name>
+                <ext-access-list-rule>
+                  <rule>deny ip host 6.6.6.6 host 2.2.2.2</rule>
+                </ext-access-list-rule>
+                <ext-access-list-rule>
+                  <rule>deny ip host 6.6.6.6 host 3.3.3.3</rule>
+                </ext-access-list-rule>
+                <ext-access-list-rule>
+                  <rule>deny ip host 6.6.6.6 host 4.4.4.4</rule>
+                </ext-access-list-rule>
+                <ext-access-list-rule>
+                  <rule>deny ip host 6.6.6.6 host 5.5.5.5</rule>
+                </ext-access-list-rule>                
+                <ext-access-list-rule>
+                  <rule>deny ip host 1.1.1.1 host 2.2.2.2</rule>
+                </ext-access-list-rule>
+                <ext-access-list-rule>
+                  <rule>deny ip host 1.1.1.1 host 3.3.3.3</rule>
+                </ext-access-list-rule>
+                <ext-access-list-rule>
+                  <rule>deny ip host 1.1.1.1 host 4.4.4.4</rule>
+                </ext-access-list-rule>
+                <ext-access-list-rule>
+                  <rule>deny ip host 1.1.1.1 host 5.5.5.5</rule>
+                </ext-access-list-rule>
+                <ext-access-list-rule>
+                  <rule>permit ip any any</rule>
+                </ext-access-list-rule>
+              </ext-named-acl>
+            </extended>
+          </access-list>
+        </ip>
+        <interface xmlns="urn:ios">
+         <Loopback>
+           <name>0</name>
+           <ip>
+             <access-group>
+               <direction>in</direction>
+               <access-list>TELNET</access-list>
+             </access-group>
+             <address>
+               <primary>
+                 <address>{ip_add_lo0}</address>
+                 <mask>255.255.255.255</mask>
+               </primary>
+             </address>
+             <ospf>
+               <process-id>
+                 <id>1</id>
+                 <area>0</area>
+               </process-id>
+             </ospf>
+           </ip>
+         </Loopback>
+         <FastEthernet>
+           <name>0/1</name>
+           <ip>
+             <ospf>
+               <process-id>
+                 <id>1</id>
+                 <area>0</area>
+               </process-id>
+             </ospf>
+           </ip>
+         </FastEthernet>
+         <Ethernet>
+            <name>1/0</name>
+            <ip>
+             <access-group>
+               <direction>in</direction>
+               <access-list>TELNET</access-list>
+             </access-group>
+              <ospf>
+                <process-id>
+                  <id>1</id>
+                  <area>0</area>
+                </process-id>
+                <network>point-to-point</network>
+              </ospf>
+            </ip>
+          </Ethernet>
+          <Ethernet>
+            <name>1/1</name>
+            <ip>
+             <access-group>
+               <direction>in</direction>
+               <access-list>TELNET</access-list>
+             </access-group>
+              <ospf>
+                <process-id>
+                  <id>1</id>
+                  <area>0</area>
+                </process-id>
+                <network>point-to-point</network>
+              </ospf>
+            </ip>
+          </Ethernet>
+          <Ethernet>
+            <name>1/2</name>
+            <ip>
+             <access-group>
+               <direction>in</direction>
+               <access-list>TELNET</access-list>
+             </access-group>
+              <ospf>
+                <process-id>
+                  <id>1</id>
+                  <area>0</area>
+                </process-id>
+                <network>point-to-point</network>
+                <cost>1000</cost>
+              </ospf>
+            </ip>
+          </Ethernet>
+        </interface>
+        <router xmlns="urn:ios">
+          <ospf>
+            <id>1</id>
+          </ospf>
+        </router>
+      </config>
+    </device>
+  </devices>
+</config-template>
